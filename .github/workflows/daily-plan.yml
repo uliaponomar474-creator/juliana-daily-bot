@@ -15,79 +15,14 @@ jobs:
           DAY=$(TZ="Europe/Moscow" date +"%u")
           DATE=$(TZ="Europe/Moscow" date +"%d.%m")
           case $DAY in
-            1) TEXT="Понедельник, ${DATE}. Начинаем неделю - закладываем фундамент.
-
-На сегодня:
-- Лайф-пост (рубрика Не тяжёлый понедельник)
-- Рассылка офферов в 3 нетворкинга Старостина
-- Проверить статистику канала
-
-100к: 3 бота x 25к + 5 аудитов x 990р + 20 гайдов x 990р
-Каждое сообщение = шаг к цели.
-
-Цель: 100к/мес" ;;
-            2) TEXT="Вторник, ${DATE}. Не тормозим.
-
-На сегодня:
-- Ответить на входящие
-- Опубликовать лид-магнит Выгораешь в переписках?
-- Рассылка офферов ещё 3 чата
-
-Воронка: пост -> лид-магнит -> аудит 990р -> бот под ключ
-Лид-магнит греет тех кто ещё не готов купить.
-
-Цель: 100к/мес" ;;
-            3) TEXT="Среда, ${DATE}. День кейсов - это твои лучшие продажи.
-
-На сегодня:
-- Опубликовать кейс с ценой + CTA пиши БОТ
-- Рассылка в чаты (LeadConverter, Код Легенды)
-- Аналитика постов недели
-
-Кейс с цифрами = доверие без уговоров.
-
-Цель: 100к/мес" ;;
-            4) TEXT="Четверг, ${DATE}. Рабочий день - без лирики.
-
-На сегодня:
-- Дожать вчерашние чаты с рассылкой
-- Проверить воронку: закреп -> кейсы -> аудит
-- Подготовить кейс для пятничного поста
-
-Схема: клиент -> аудит 990р -> бот под ключ
-Аудит - это вход. Предлагай его всем кто пишет.
-
-Цель: 100к/мес" ;;
-            5) TEXT="Пятница, ${DATE}. День офферов. Люди решают к выходным.
-
-На сегодня:
-- Прямой оффер пиши БОТ
-- Финальная рассылка недели
-- Итоги: сколько диалогов, сколько аудитов
-
-Дефицит работает только если он настоящий.
-
-Цель: 100к/мес" ;;
-            6) TEXT="Суббота, ${DATE}. Промты и идеи.
-
-На сегодня:
-- Опубликовать рубрику Промты субботы
-- Записать идеи постов на следующую неделю
-- Отдохнуть - выгоревший эксперт не продаёт
-
-Каждый пост - кирпич в фундаменте. Суббота - осмотреть постройку.
-
-Цель: 100к/мес" ;;
-            7) TEXT="Воскресенье, ${DATE}. План на неделю.
-
-На сегодня:
-- Контент-план: пн/ср/пт/сб
-- Черновики 2 постов
-- 3 главных действия на неделю к 100к
-
-Неделя без плана = неделя без денег.
-10 минут планирования сегодня = 10 часов не потраченных впустую завтра.
-
-Цель: 100к/мес" ;;
+            1) TEXT=$(printf "Ponedelnik %s\n\nNa segodnya:\n- Laif-post\n- Rassylka offerov\n- Statistika\n\n100k: 3 bota x 25k + 5 auditov x 990r + 20 gajdov x 990r\n\nCel: 100k/mes" "$DATE") ;;
+            2) TEXT=$(printf "Vtornik %s\n\nNa segodnya:\n- Otvetit na vkhodyashchie\n- Opublikovat lid-magnit\n- Rassylka eshche 3 chata\n\nVoronka: post -> lid-magnit -> audit 990r -> bot pod kluch\n\nCel: 100k/mes" "$DATE") ;;
+            3) TEXT=$(printf "Sreda %s - Den kejsov.\n\nNa segodnya:\n- Opublikovat kejs s cenoj + CTA pishi BOT\n- Rassylka v chaty (LeadConverter, Kod Legendy)\n- Analitika postov nedeli\n\nKejs s ciframi = doverie bez ugovorov.\n\nCel: 100k/mes" "$DATE") ;;
+            4) TEXT=$(printf "Chetverg %s.\n\nNa segodnya:\n- Dozhat vcherashnye chaty\n- Proverit voronku: zakrep -> kejsy -> audit\n- Podgotovit kejs dlya pyatnichnogo posta\n\nSkhema: klient -> audit 990r -> bot pod kluch\n\nCel: 100k/mes" "$DATE") ;;
+            5) TEXT=$(printf "Pyatnica %s - Den offerov.\n\nNa segodnya:\n- Pryamoj offer pishi BOT\n- Finalnaya rassylka nedeli\n- Itogi: skolko dialogov, skolko auditov\n\nDeficit rabotaet tolko esli on nastoyashchij.\n\nCel: 100k/mes" "$DATE") ;;
+            6) TEXT=$(printf "Subbota %s.\n\nNa segodnya:\n- Promty subbot (rubrika AI)\n- Idei postov na sleduyu nedelu\n- Otdohnyt - vygorevshij ekspert ne prodaet\n\nKazhdy post - kirpich v fundamente.\n\nCel: 100k/mes" "$DATE") ;;
+            7) TEXT=$(printf "Voskresenye %s - Plan na nedelu.\n\nNa segodnya:\n- Kontent-plan: pn/sr/pt/sb\n- Chernoviki 2 postov\n- 3 glavnykh dejstviya na nedelu\n\nNedelya bez plana = nedelya bez deneg.\n\nCel: 100k/mes" "$DATE") ;;
           esac
-          curl -s "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage"             --data-urlencode "chat_id=${CHAT_ID}"             --data-urlencode "text=${TEXT}"
+          curl -s "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${CHAT_ID}" \
+            --data-urlencode "text=${TEXT}"
