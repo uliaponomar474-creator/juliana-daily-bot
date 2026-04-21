@@ -1,0 +1,24 @@
+name: Juliana Daily Plan
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+jobs:
+  send-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send to Telegram
+        run: |
+          DAY=$(TZ="Europe/Moscow" date +"%u")
+          DATE=$(TZ="Europe/Moscow" date +"%d.%m")
+          case $DAY in
+            1) T="Лайф-пост понедельник, Рассылка офферов, Статистика канала";;
+            2) T="Ответить на сообщения, Лид-магнит, Рассылка офферов";;
+            3) T="Кейс пиши БОТ, Рассылка в чаты, Аналитика постов";;
+            4) T="Рассылка в чаты, Воронка, Подготовить кейс";;
+            5) T="Оффер пиши БОТ, Рассылка, Итоги недели";;
+            6) T="Промты субботы, Отдых, Идеи на неделю";;
+            7) T="Контент-план, Подготовить посты, Отдых";;
+          esac
+          ENCODED=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" "$DATE — план дня: $T. Цель 100к")
+          curl -s "https://api.telegram.org/bot8632418399:AAGaAg6vONo7HYVGvwDcBZ1ZefC5SpFBrKQ/sendMessage?chat_id=600328534&text=$ENCODED"
